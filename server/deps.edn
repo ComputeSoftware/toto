@@ -1,0 +1,27 @@
+{:paths   ["src" "../client/resources"]
+ :deps    {org.clojure/clojure       {:mvn/version "1.10.1"}
+           org.clojure/core.async    {:mvn/version "1.2.603"}
+           org.clojure/data.json     {:mvn/version "1.0.0"}
+           clj-http                  {:mvn/version "3.10.1"}
+           com.taoensso/sente        {:mvn/version "1.15.0"}
+           com.taoensso/timbre       {:mvn/version "4.10.0"}
+           aleph                     {:mvn/version "0.4.6"}
+           ring                      {:mvn/version "1.8.1"}
+           ring/ring-defaults        {:mvn/version "0.3.2"}
+           bk/ring-gzip              {:mvn/version "0.3.0"}
+           ring-cljsjs               {:mvn/version "0.2.0"}
+           compojure                 {:mvn/version "1.6.1"}
+           hiccup                    {:mvn/version "2.0.0-alpha2"}
+           com.cognitect/transit-clj {:mvn/version "1.0.324"}
+           irresponsible/tentacles   {:mvn/version "0.6.6"}
+           respeced                  {:mvn/version "0.0.1"}
+           hawk                      {:mvn/version "0.2.11"}}
+ :aliases {:dev  {:extra-paths ["siderail"]
+                  :extra-deps  {org.clojure/test.check {:mvn/version "1.0.0"}}}
+           ;binaryage/devtools {:mvn/version "0.9.10"}}}
+           :cljs {:extra-paths ["src/cljs"]
+                  :extra-deps  {thheller/shadow-cljs {:mvn/version "2.10.13"}}}
+           :pack {:extra-deps {pack/pack.alpha {:git/url "https://github.com/juxt/pack.alpha.git"
+                                                :sha     "c70740ffc10805f34836da2160fa1899601fac02"}}
+                  :main-opts  ["-m"]}}}
+
