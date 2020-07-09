@@ -1,4 +1,4 @@
-{:paths   ["src" "../client/resources"]
+{:paths   ["src" "../client/release"]
  :deps    {org.clojure/clojure       {:mvn/version "1.10.1"}
            org.clojure/core.async    {:mvn/version "1.2.603"}
            org.clojure/data.json     {:mvn/version "1.0.0"}
@@ -16,12 +16,14 @@
            irresponsible/tentacles   {:mvn/version "0.6.6"}
            respeced                  {:mvn/version "0.0.1"}
            hawk                      {:mvn/version "0.2.11"}}
- :aliases {:dev  {:extra-paths ["siderail"]
+ :aliases {:dev  {:extra-paths ["siderail" "../client/resources"]
                   :extra-deps  {org.clojure/test.check {:mvn/version "1.0.0"}}}
            ;binaryage/devtools {:mvn/version "0.9.10"}}}
            :cljs {:extra-paths ["src/cljs"]
                   :extra-deps  {thheller/shadow-cljs {:mvn/version "2.10.13"}}}
            :pack {:extra-deps {pack/pack.alpha {:git/url "https://github.com/juxt/pack.alpha.git"
                                                 :sha     "c70740ffc10805f34836da2160fa1899601fac02"}}
-                  :main-opts  ["-m"]}}}
+                  :main-opts  ["-m"]}
+           :jar  {:extra-deps {seancorfield/depstar {:mvn/version "1.0.94"}}
+                  :main-opts  ["-m" "hf.depstar.jar" "toto-thin.jar"]}}}
 

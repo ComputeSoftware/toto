@@ -1,10 +1,8 @@
 {:deps   true
- :builds {:lib {:target     :browser
-                :output-dir "resources/toto/public/js"
-                :modules    {:toto {:entries [toto.core]}}}
-          :app {:target     :browser
+ :builds {:app {:target     :browser
                 :output-dir "resources/toto/public/js"
                 :modules    {:app {:entries [toto.app]
                                    :init-fn toto.app/init}}
+                :release    {:output-dir "release/toto/public/js"}
                 :devtools   {:after-load toto.app/init
                              :preloads   [devtools.preload]}}}}
