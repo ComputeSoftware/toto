@@ -70,12 +70,12 @@
 
 (defn index-view
   [{:keys [title
-           css-href
+           css-hrefs
            mathjax?
            mathjax-src
            mathjax-version]
     :or   {title           "Oz document"
-           css-href        "http://ozviz.io/css/style.css"
+           css-hrefs       ["http://ozviz.io/css/style.css"]
            mathjax-version "2.7.7"}}]
   (str
     (hiccup/html
@@ -88,9 +88,11 @@
         [:link {:href "http://ozviz.io/oz.svg"
                 :rel  "shortcut icon"
                 :type "image/x-icon"}]
-        [:link {:href css-href
-                :rel  "stylesheet"
-                :type "text/css"}]
+        (map (fn [href]
+               [:link {:href href
+                       :rel  "stylesheet"
+                       :type "text/css"}])
+             css-hrefs)
         (when (or mathjax? mathjax-src)
           [:script {:src   (or mathjax-src (mathjax-src-url mathjax-version))
                     :type  "text/javascript"
