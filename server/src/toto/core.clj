@@ -5,10 +5,11 @@
     [toto.impl.view :as impl.view]))
 
 (defn init!
-  [{::keys [port]}]
+  [{::keys [port index-view]}]
   (server/start!
     (cond-> {}
-      port (assoc ::server/port port))))
+      port (assoc ::server/port port)
+      index-view (assoc ::server/index-view index-view))))
 
 (defn ^:deprecated start-server!
   "DEPRECATED. Use toto.core/init! instead."

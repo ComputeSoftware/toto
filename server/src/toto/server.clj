@@ -69,14 +69,14 @@
           version))
 
 (defn index-view
-  [{::keys [title
-            css-href
-            mathjax?
-            mathjax-src
-            mathjax-version]
-    :or    {title           "Oz document"
-            css-href        "http://ozviz.io/css/style.css"
-            mathjax-version "2.7.7"}}]
+  [{:keys [title
+           css-href
+           mathjax?
+           mathjax-src
+           mathjax-version]
+    :or   {title           "Oz document"
+           css-href        "http://ozviz.io/css/style.css"
+           mathjax-version "2.7.7"}}]
   (str
     (hiccup/html
       [:html
@@ -101,6 +101,7 @@
                   :type "text/javascript"}]]])))
 
 (defonce current-root-dir (atom ""))
+(defonce *index-view-argm (atom {}))
 
 (compojure/defroutes my-routes
   (compojure/GET "/" req
@@ -109,7 +110,7 @@
        :session (if (session-uid req)
                   (:session req)
                   (assoc (:session req) :uid (unique-id)))
-       :body    (index-view {})}
+       :body    (index-view @*index-view-argm)}
       "text/html"))
   (compojure/GET "/token" req {:csrf-token anti-forgery/*anti-forgery-token*})
   (compojure/GET "/chsk" req
@@ -212,9 +213,15 @@
   (stop-router!)
   (stop-web-server!))
 
+(defn set-index-view-args!
+  [index-view-argm]
+  (reset! *index-view-argm index-view-argm)
+  index-view-argm)
+
 (defn start!
   "Start the oz plot server (on localhost:10666 by default)."
-  [{::keys [port]}]
+  [{::keys [port index-view]}]
+  (set-index-view-args! index-view)
   (start-web-server! {::port (or port default-port)})
   (start-router!))
 

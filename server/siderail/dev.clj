@@ -14,7 +14,8 @@
 (comment
 
   ;; Start the plot server
-  (toto/init! {::toto/port 10666})
+  (toto/init! {::toto/port       10666
+               ::toto/index-view {}})
 
 
 
@@ -36,8 +37,8 @@
   (toto/view! line-plot)
   (toto/view! [:div [:h1 "yo dawg"]])
   (toto/view! [:div
-             [:h1 "What up pepes?"]
-             [:vega-lite line-plot]])
+               [:h1 "What up pepes?"]
+               [:vega-lite line-plot]])
 
   ;; We can also try publishing the plot like so (requires auth; see README.md for setup)
   (toto/publish! line-plot)
