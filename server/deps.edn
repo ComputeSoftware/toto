@@ -1,23 +1,21 @@
 {:paths   ["src" "../client/release"]
  :deps    {org.clojure/clojure       {:mvn/version "1.10.1"}
-           org.clojure/core.async    {:mvn/version "1.2.603"}
+           org.clojure/core.async    {:mvn/version "1.3.610"}
            org.clojure/data.json     {:mvn/version "1.0.0"}
-           clj-http                  {:mvn/version "3.10.1"}
            com.taoensso/sente        {:mvn/version "1.15.0"}
            com.taoensso/timbre       {:mvn/version "4.10.0"}
-           aleph                     {:mvn/version "0.4.6"}
-           ring                      {:mvn/version "1.8.1"}
+           http-kit                  {:mvn/version "2.4.0"}
+           ring/ring-core            {:mvn/version "1.8.1"}
            ring/ring-defaults        {:mvn/version "0.3.2"}
            bk/ring-gzip              {:mvn/version "0.3.0"}
            ring-cljsjs               {:mvn/version "0.2.0"}
-           compojure                 {:mvn/version "1.6.1"}
+           compojure                 {:mvn/version "1.6.2"}
            hiccup                    {:mvn/version "2.0.0-alpha2"}
            com.cognitect/transit-clj {:mvn/version "1.0.324"}
-           irresponsible/tentacles   {:mvn/version "0.6.6"}
-           respeced                  {:mvn/version "0.0.1"}
            hawk                      {:mvn/version "0.2.11"}}
  :aliases {:dev  {:extra-paths ["siderail" "../client/resources"]
-                  :extra-deps  {org.clojure/test.check {:mvn/version "1.0.0"}}}
+                  :extra-deps  {org.clojure/test.check  {:mvn/version "1.0.0"}
+                                irresponsible/tentacles {:mvn/version "0.6.6"}}}
            ;binaryage/devtools {:mvn/version "0.9.10"}}}
            :cljs {:extra-paths ["src/cljs"]
                   :extra-deps  {thheller/shadow-cljs {:mvn/version "2.10.13"}}}

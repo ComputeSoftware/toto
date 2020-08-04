@@ -9,11 +9,10 @@
     [compojure.route :as route]
     [taoensso.timbre :as log]
     [taoensso.sente :as sente]
-    [aleph.http :as aleph]
+    [org.httpkit.server :as httpkit.server]
     [hiccup2.core :as hiccup]
-    [taoensso.sente.server-adapters.aleph :as sente.aleph]
+    [taoensso.sente.server-adapters.http-kit :as sente.http-kit]
     [taoensso.sente.packers.transit :as sente-transit]
-    [clojure.data.json :as json]
     [clojure.java.io :as io]
     [toto.live :as live])
   (:gen-class))
@@ -26,7 +25,7 @@
 (let [packer (sente-transit/get-transit-packer)
       ;; TODO CSRF token set to nil for now; Need to fix this https://github.com/metasoarous/oz/issues/122
       chsk-server (sente/make-channel-socket-server!
-                    (sente.aleph/get-sch-adapter)
+                    (sente.http-kit/get-sch-adapter)
                     {:packer        packer
                      :csrf-token-fn nil})
       {:keys [ch-recv send-fn connected-uids
@@ -197,9 +196,11 @@
     :or    {port default-port}}]
   (stop-web-server!)
   (let [ring-handler (var main-ring-handler)
-        server (aleph/start-server ring-handler {:port port})
-        port (aleph.netty/port server)
-        stop-fn #(.close ^java.io.Closeable server)
+        server (httpkit.server/run-server
+                 ring-handler
+                 {:port                 port
+                  :legacy-return-value? false})
+        stop-fn #(deref (httpkit.server/server-stop! server {}))
         uri (format "http://localhost:%s/" port)]
     (log/infof "Web server is running at `%s`" uri)
     (reset! *web-server {:port port :stop-fn stop-fn})
