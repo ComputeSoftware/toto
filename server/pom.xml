@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>toto</groupId>
   <artifactId>toto</artifactId>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
   <name>toto</name>
   <dependencies>
     <dependency>
@@ -84,10 +84,6 @@
     <repository>
       <id>clojars</id>
       <url>https://repo.clojars.org/</url>
-    </repository>
-    <repository>
-      <id>cs-mvn</id>
-      <url>s3://cs-mvn/release</url>
     </repository>
   </repositories>
 </project>
