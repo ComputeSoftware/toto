@@ -16,10 +16,10 @@
            opts (merge {:renderer :canvas
                         ;; Have to think about how we want the defaults here to behave
                         :mode     "vega-lite"}
-                       opts)]
+                  opts)]
        (-> (vegaEmbed elem doc (clj->js opts))
-           (.catch (fn [err]
-                     (js/console.log err))))))))
+         (.catch (fn [err]
+                   (js/console.log err))))))))
 
 ;; WIP; TODO Finish figuring this out; A little thornier than I thought, because data can come in so many
 ;; different shapes; Should clojure.spec this out:
@@ -34,8 +34,8 @@
      ;; Only rerender from scratch if the viz specification has actually changed, or if always rerender is
      ;; specified
      (or (:always-rerender new-opts)
-         (not= (dissoc old-doc :data) (dissoc new-doc :data))
-         (not= old-opts new-opts))
+       (not= (dissoc old-doc :data) (dissoc new-doc :data))
+       (not= old-opts new-opts))
      (embed-vega new-doc new-opts)
      ;; Otherwise, just update the data component
      ;; TODO This is the hard part to figure out
@@ -45,9 +45,9 @@
      :else
      nil)))
 
-(defn vega
+(defn Vega
   "Reagent component that renders vega"
-  ([doc] (vega doc {}))
+  ([doc] (Vega doc {}))
   ([doc opts]
    ;; Is this the right way to do this? So vega component behaves abstractly like a vega-lite potentially?
    (let [opts (merge {:mode "vega"} opts)]
@@ -59,29 +59,17 @@
                                   (embed-vega (rd/dom-node this) new-doc new-opts)))
         :reagent-render       (fn [doc] [:div])}))))
 
-(defn vega-lite
+(defn VegaLite
   "Reagent component that renders vega-lite."
-  ([doc] (vega-lite doc {}))
+  ([doc] (VegaLite doc {}))
   ([doc opts]
    ;; Which way should the merge go?
-   (vega doc (merge opts {:mode "vega-lite"}))))
+   (Vega doc (merge opts {:mode "vega-lite"}))))
 
+(defmulti live-view* :type)
 
-(def ^:private live-viewers-state
-  (r/atom {:vega      vega
-           :vega-lite vega-lite}))
-
-(defn register-live-view
-  [key component]
-  (swap! live-viewers-state assoc key component))
-
-(defn register-live-views
-  [& {:as live-views}]
-  (swap! live-viewers-state merge live-views))
-
-(register-live-views
-  :vega vega
-  :vega-lite vega-lite)
+(defmethod live-view* :vega [{:keys [args]}] (into [Vega] args))
+(defmethod live-view* :vega-lite [{:keys [args]}] (into [VegaLite] args))
 
 (defn ^:no-doc live-view
   ;; should handle sharing data with nodes that need it?
@@ -89,21 +77,14 @@
   ;; prewalk spec, rendering special hiccup tags like :vega and :vega-lite, and potentially other composites,
   ;; rendering using the components above. Leave regular hiccup unchanged).
   ;; TODO finish writing; already hooked in below so will break now
-  (let [live-viewers @live-viewers-state
-        live-viewer-keys (set (keys live-viewers))]
+  (let [live-view-kset (set (keys (methods live-view*)))]
     (clojure.walk/prewalk
-      (fn [x] (if (and (coll? x) (live-viewer-keys (first x)))
-                (into
-                  [(get live-viewers (first x))]
-                  (rest x))
-                x))
+      (fn [x]
+        (if (and (coll? x) (live-view-kset (first x)))
+          (live-view* {:type (first x)
+                       :args (rest x)})
+          x))
       doc)))
-
-;; TODO Rename this to live-view; But need to make sure to edit in the repl tooling application code as well,
-;; since that's what actually uses this
-(def ^:no-doc view-spec live-view)
-;; should handle sharing data with nodes that need it?
-
 
 (comment
   ;; This is still a work in progress
@@ -112,8 +93,8 @@
     (let [m (.map leaflet "map")
           _ (.setView m (clj->js [51.505 -0.09]) 4)
           tile (.tileLayer leaflet
-                           "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
-                           (clj->js {:attribution "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors"}))
+                 "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+                 (clj->js {:attribution "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors"}))
 
           _ (.addTo tile m)
           marker (.marker leaflet (clj->js [40.7128 -74.0059]))]
