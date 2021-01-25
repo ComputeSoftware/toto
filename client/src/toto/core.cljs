@@ -3,7 +3,8 @@
     [reagent.core :as r]
     [reagent.dom :as rd]
     [toto.views :as views]
-    [toto.views.vega]))
+    [toto.views.vega]
+    [toto.views.highcharts]))
 
 (defn ^:no-doc live-view
   ;; should handle sharing data with nodes that need it?

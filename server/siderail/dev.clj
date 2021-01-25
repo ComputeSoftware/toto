@@ -40,6 +40,17 @@
                [:h1 "What up pepes?"]
                [:vega-lite line-plot]])
 
+  (toto/view! [:div
+               [:h1 "What up pepes?"]
+               [:highcharts {:options {:series (into []
+                                                 (map (fn [[series-name data]]
+                                                        {:name series-name
+                                                         :data (map :quantity data)}))
+                                                 (group-by
+                                                   :item
+                                                   (play-data "monkey" "slipper" "broom")))
+                                       #_#_:chart {:type "line"}}}]])
+
   ;; We can also try publishing the plot like so (requires auth; see README.md for setup)
   (toto/publish! line-plot)
   ;; Then follow the vega-editor link.
