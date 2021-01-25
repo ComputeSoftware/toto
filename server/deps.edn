@@ -4,15 +4,15 @@
            org.clojure/data.json     {:mvn/version "1.0.0"}
            com.taoensso/sente        {:mvn/version "1.15.0"}
            com.taoensso/timbre       {:mvn/version "4.10.0"}
-           http-kit                  {:mvn/version "2.4.0"}
+           http-kit/http-kit         {:mvn/version "2.4.0"}
            ring/ring-core            {:mvn/version "1.8.1"}
            ring/ring-defaults        {:mvn/version "0.3.2"}
            bk/ring-gzip              {:mvn/version "0.3.0"}
-           ring-cljsjs               {:mvn/version "0.2.0"}
-           compojure                 {:mvn/version "1.6.2"}
-           hiccup                    {:mvn/version "2.0.0-alpha2"}
+           ring-cljsjs/ring-cljsjs   {:mvn/version "0.2.0"}
+           compojure/compojure       {:mvn/version "1.6.2"}
+           hiccup/hiccup             {:mvn/version "2.0.0-alpha2"}
            com.cognitect/transit-clj {:mvn/version "1.0.324"}
-           hawk                      {:mvn/version "0.2.11"}}
+           hawk/hawk                 {:mvn/version "0.2.11"}}
  :aliases {:dev  {:extra-paths ["siderail" "../client/resources"]
                   :extra-deps  {org.clojure/test.check  {:mvn/version "1.0.0"}
                                 irresponsible/tentacles {:mvn/version "0.6.6"}}}
