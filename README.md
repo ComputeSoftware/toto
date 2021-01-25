@@ -4,6 +4,14 @@
 
 Based off [Oz](https://github.com/metasoarous/oz).
 
+## Release Steps 
+
+```shell
+./bin/release-client.sh
+./bin/build-lib.sh
+./bin/deploy-lib.sh
+```
+
 ## License
 
 Copyright © 2020 Compute Software
