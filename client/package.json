@@ -11,7 +11,7 @@
     "vega-embed": "^6.9.0",
     "vega-lite": "^4.13.1",
     "vega-tooltip": "^0.23.0",
-    "highcharts": "9.2.2",
+    "highcharts": "9.0.0",
     "highcharts-react-official": "3.0.0"
   },
   "devDependencies": {
