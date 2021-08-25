@@ -14,7 +14,7 @@
 (comment
 
   ;; Start the plot server
-  (toto/init! {::toto/port       10666
+  (toto/init! {::toto/port       10667
                ::toto/index-view {}})
 
 
