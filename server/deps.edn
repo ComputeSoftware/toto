@@ -1,28 +1,27 @@
 {:paths   ["src" "../client/release"]
- :deps    {org.clojure/clojure       {:mvn/version "1.10.3"}
-           org.clojure/core.async    {:mvn/version "1.3.618"}
+ :deps    {org.clojure/core.async    {:mvn/version "1.5.648"}
            org.clojure/data.json     {:mvn/version "2.4.0"}
-           com.taoensso/sente        {:mvn/version "1.15.0"}
-           com.taoensso/timbre       {:mvn/version "4.10.0"}
+           com.taoensso/sente        {:mvn/version "1.16.2"}
+           com.taoensso/timbre       {:mvn/version "5.2.1"}
            http-kit/http-kit         {:mvn/version "2.5.3"}
-           ring/ring-core            {:mvn/version "1.9.4"}
+           ring/ring-core            {:mvn/version "1.9.5"}
            ring/ring-defaults        {:mvn/version "0.3.3"}
            bk/ring-gzip              {:mvn/version "0.3.0"}
            ring-cljsjs/ring-cljsjs   {:mvn/version "0.2.0"}
            compojure/compojure       {:mvn/version "1.6.2"}
            hiccup/hiccup             {:mvn/version "2.0.0-alpha2"}
-           com.cognitect/transit-clj {:mvn/version "1.0.324"}
+           com.cognitect/transit-clj {:mvn/version "1.0.329"}
            hawk/hawk                 {:mvn/version "0.2.11"}}
  :aliases {:dev  {:extra-paths ["siderail" "../client/resources"]
-                  :extra-deps  {org.clojure/test.check  {:mvn/version "1.1.0"}
-                                irresponsible/tentacles {:mvn/version "0.6.8"}}}
+                  :extra-deps  {org.clojure/test.check  {:mvn/version "1.1.1"}
+                                irresponsible/tentacles {:mvn/version "0.6.9"}}}
            ;binaryage/devtools {:mvn/version "0.9.10"}}}
            :cljs {:extra-paths ["src/cljs"]
-                  :extra-deps  {thheller/shadow-cljs {:mvn/version "2.15.5"}}}
+                  :extra-deps  {thheller/shadow-cljs {:mvn/version "2.18.0"}}}
            :pack {:extra-deps {pack/pack.alpha {:git/url "https://github.com/juxt/pack.alpha.git"
-                                                :sha     "b093f79420fef019faf62a75b888b5e10f4e8cc9"}}
+                                                :sha     "9fd4a63ddeec3bedcbc819422de5a40ccb9eb8c9"}}
                   :main-opts  ["-m"]}
-           :jar  {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.278"}}
+           :jar  {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
                   :exec-fn      hf.depstar/jar
                   :exec-args    {:jar      "toto-thin.jar"
                                  :sync-pom true}}}}
