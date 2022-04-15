@@ -42,9 +42,9 @@
     (chsk-send! uid data)))
 
 (add-watch connected-uids :connected-uids
-           (fn [_ _ old new]
-             (when (not= old new)
-               (log/infof "Connected uids change: %s" new))))
+  (fn [_ _ old new]
+    (when (not= old new)
+      (log/infof "Connected uids change: %s" new))))
 
 (defn connected-uids? []
   @connected-uids)
@@ -65,11 +65,12 @@
 (defn mathjax-src-url
   [version]
   (format "https://cdnjs.cloudflare.com/ajax/libs/mathjax/%s/MathJax.js?config=TeX-MML-AM_CHTML"
-          version))
+    version))
 
 (defn index-view
   [{:keys [title
            css-hrefs
+           extra-head
            mathjax?
            mathjax-src
            mathjax-version]
@@ -79,23 +80,24 @@
   (str
     (hiccup/html
       [:html
-       [:head
-        [:meta {:charset "UTF-8"}]
-        [:meta {:content "width=device-width, initial-scale=1"
-                :name    "viewport"}]
-        [:title title]
-        [:link {:href "http://ozviz.io/oz.svg"
-                :rel  "shortcut icon"
-                :type "image/x-icon"}]
-        (map (fn [href]
-               [:link {:href href
-                       :rel  "stylesheet"
-                       :type "text/css"}])
-             css-hrefs)
-        (when (or mathjax? mathjax-src)
-          [:script {:src   (or mathjax-src (mathjax-src-url mathjax-version))
-                    :type  "text/javascript"
-                    :async true}])]
+       (into [:head
+              [:meta {:charset "UTF-8"}]
+              [:meta {:content "width=device-width, initial-scale=1"
+                      :name    "viewport"}]
+              [:title title]
+              [:link {:href "http://ozviz.io/oz.svg"
+                      :rel  "shortcut icon"
+                      :type "image/x-icon"}]
+              (map (fn [href]
+                     [:link {:href href
+                             :rel  "stylesheet"
+                             :type "text/css"}])
+                css-hrefs)
+              (when (or mathjax? mathjax-src)
+                [:script {:src   (or mathjax-src (mathjax-src-url mathjax-version))
+                          :type  "text/javascript"
+                          :async true}])]
+         extra-head)
        [:body
         [:div#app]
         [:script {:src  "js/app.js"
@@ -140,11 +142,11 @@
 
 (def main-ring-handler
   (-> my-routes
-      (ring.middleware.defaults/wrap-defaults
-        (dissoc ring.middleware.defaults/site-defaults
-                :security))
-      (cljsjs/wrap-cljsjs)
-      (gzip/wrap-gzip)))
+    (ring.middleware.defaults/wrap-defaults
+      (dissoc ring.middleware.defaults/site-defaults
+        :security))
+    (cljsjs/wrap-cljsjs)
+    (gzip/wrap-gzip)))
 
 (defmulti -event-msg-handler :id)
 
@@ -169,7 +171,7 @@
 (defn start-router! []
   (stop-router!)
   (reset! router_
-          (sente/start-server-chsk-router! ch-chsk event-msg-handler)))
+    (sente/start-server-chsk-router! ch-chsk event-msg-handler)))
 
 (defonce ^:private *web-server (atom nil))
 
@@ -185,7 +187,7 @@
   [uri]
   (try
     (if (and (java.awt.Desktop/isDesktopSupported)
-             (.isSupported (java.awt.Desktop/getDesktop) java.awt.Desktop$Action/BROWSE))
+          (.isSupported (java.awt.Desktop/getDesktop) java.awt.Desktop$Action/BROWSE))
       (.browse (java.awt.Desktop/getDesktop) (java.net.URI. uri))
       (.exec (java.lang.Runtime/getRuntime) (str "xdg-open " uri)))
     (Thread/sleep 7500)
