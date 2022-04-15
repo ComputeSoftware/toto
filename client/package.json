@@ -22,7 +22,7 @@
     "leaflet": "^1.6.0",
     "leaflet-vega": "^0.8.6",
     "luma.gl": "6.4",
-    "marked": "^0.8.2",
+    "marked": "^4.0.10",
     "shadow-cljs": "2.18.0"
   },
   "scripts": {
