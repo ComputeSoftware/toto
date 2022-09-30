@@ -18,7 +18,7 @@
   "devDependencies": {
     "@deck.gl/core": "6.4",
     "@deck.gl/layers": "6.4",
-    "@msrvida/sanddance": "^2",
+    "@msrvida/sanddance": "^4",
     "leaflet": "^1.6.0",
     "leaflet-vega": "^0.8.6",
     "luma.gl": "6.4",
